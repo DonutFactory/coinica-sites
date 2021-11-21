@@ -1,1 +1,1 @@
-# coinica-sites
+# coinica sites
