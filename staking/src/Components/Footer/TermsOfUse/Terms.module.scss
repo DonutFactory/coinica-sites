@@ -1,0 +1,14 @@
+.close{
+}
+
+.content{
+}
+
+.terms_of_use ul li:before{
+    content: "◉ ";
+}
+
+ol { counter-reset: item; padding: 10px 20px; }
+li{ display: block }
+.terms_of_use li:before { content: counters(item, ".") " "; counter-increment: item}
+.terms_of_use li{ margin-top:10px; }

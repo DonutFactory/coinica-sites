@@ -1,0 +1,260 @@
+.container {
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.mainheaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  width: 100%;
+
+  .mainheader {
+    background: linear-gradient(62.86deg, #242D41 -32.28%, #161C2B 84.45%);
+    filter: drop-shadow(0px 0px 6px #0F1223);
+    max-width: 986px;
+    padding: 40px 20px;
+  
+    .main_icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      img {
+        margin-left: 30px;
+      }
+      @media screen and (max-width: "375px") {
+        img {
+          width: 180px;
+        }
+      }
+    }
+  
+    .main_desc {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      
+      @media (min-width: "960px") {
+        padding-right: 40px;
+        align-items: flex-start;
+      }
+      
+      h2 {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+      p {
+        width: 100%;
+        text-align: left;
+        color: #9DC8EF;
+      }
+    }
+  }
+}
+
+.subheaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  width: 100%;
+  
+  .subheader {
+    background: #0E141F;
+    filter: drop-shadow(0px 0px 6px #0F1223);
+    max-width: 986px;
+    padding: 20px;
+
+    .totalStaked {
+      @media (min-width: "960px") {
+        border-right: 2px solid #263550;
+      }
+      @media (max-width: "959px") {
+        border-bottom: 2px solid #263550;
+      }
+    }
+    .totalStaked, .CCAprice {
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h2 {
+        margin: 0;
+      }
+    }
+    .totalStakedlabel, .CCAlabel {
+      color: #57688D;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+    }
+  }
+}
+
+.stakeRewardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  width: 100%;
+
+  h1 {
+    margin-bottom: 0px;
+  }
+
+  .stake_reward {
+    max-width: 986px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    p {
+      margin-top: 15px;
+      color: #9DC8EF;
+    }
+  }
+
+  .stake {
+    background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
+    box-shadow: 0px 0px 6px #0F1223;
+    min-height: 400px;
+    width: 480px;
+    padding: 50px;
+    margin-right: 13px;
+
+    @media (max-width: 1565px) {
+      width: 100%;
+      margin: 0 0 25px 0;
+    }
+
+    img {
+      width: 130px;
+      height: 130px;
+    }
+  }
+
+  .reward {
+    background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
+    box-shadow: 0px 0px 6px #0F1223;
+    min-height: 400px;
+    width: 480px;
+    padding: 50px;
+    margin-left: 13px;
+
+    @media (max-width: 1565px) {
+      width: 100%;
+      margin: 0px;
+    }
+
+    img {
+      width: 130px;
+      height: 130px;
+    }
+  }
+}
+
+.ccaRewardsAndVestingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  width: 100%;
+
+  .ccaRewardsAndVesting {
+    max-width: 986px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    p {
+      margin-top: 15px;
+      color: #9DC8EF;
+    }
+  }
+
+  .ccaRewards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
+    box-shadow: 0px 0px 6px #0F1223;
+    height: 400px;
+    width: 480px;
+    padding: 0 50px 20px 50px;
+    margin-right: 13px;
+
+    @media (max-width: 1565px) {
+      width: 100%;
+      margin: 0 0 25px 0;
+    }
+
+    h1 {
+      margin-top: 0px !important;
+    }
+
+    .ccaRewardsValue {
+      display: flex;
+      justify-content: space-between;
+
+      small {
+        color: #57688D;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      span {
+        color: #79B9F4;
+        font-size: 18px;
+        font-weight: 700
+      }
+    }
+  }
+
+  .vesting {
+    background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
+    box-shadow: 0px 0px 6px #0F1223;
+    height: 400px;
+    width: 480px;
+    padding: 50px;
+    margin-left: 13px;
+
+    h1 {
+      margin-bottom: 0px;
+    }
+
+    @media (max-width: 1565px) {
+      width: 100%;
+      margin: 0px;
+    }
+
+    img {
+      width: 130px;
+      height: 130px;
+    }
+  }
+}
+
+.socialSitesContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+
+  .socialSites {
+    width: 986px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+    img {
+      margin-left: 10px;
+    }
+  }
+}
