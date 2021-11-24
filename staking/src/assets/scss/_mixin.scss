@@ -1,0 +1,21 @@
+@mixin stroke($color: #000, $size: 1px) {
+  text-shadow: -#{$size} 0 0 $color, calc(-#{$size} * -1) 0 0 $color,
+    0 -#{$size} 0 $color, 0 calc(-#{$size} * -1) 0 $color;
+
+  text-shadow: calc(-#{$size} * 1) calc(-#{$size} * 0) 0 $color,
+    calc(-#{$size} * 0.9239) calc(-#{$size} * 0.3827) 0 $color,
+    calc(-#{$size} * 0.7071) calc(-#{$size} * 0.7071) 0 $color,
+    calc(-#{$size} * 0.3827) calc(-#{$size} * 0.9239) 0 $color,
+    calc(-#{$size} * 0) calc(-#{$size} * 1) 0 $color,
+    calc(-#{$size} * -0.3827) calc(-#{$size} * 0.9239) 0 $color,
+    calc(-#{$size} * -0.7071) calc(-#{$size} * 0.7071) 0 $color,
+    calc(-#{$size} * -0.9239) calc(-#{$size} * 0.3827) 0 $color,
+    calc(-#{$size} * -1) calc(-#{$size} * 0) 0 $color,
+    calc(-#{$size} * -0.9239) calc(-#{$size} * -0.3827) 0 $color,
+    calc(-#{$size} * -0.7071) calc(-#{$size} * -0.7071) 0 $color,
+    calc(-#{$size} * -0.3827) calc(-#{$size} * -0.9239) 0 $color,
+    calc(-#{$size} * 0) calc(-#{$size} * -1) 0 $color,
+    calc(-#{$size} * 0.3827) calc(-#{$size} * -0.9239) 0 $color,
+    calc(-#{$size} * 0.7071) calc(-#{$size} * -0.7071) 0 $color,
+    calc(-#{$size} * 0.9239) calc(-#{$size} * -0.3827) 0 $color;
+}
