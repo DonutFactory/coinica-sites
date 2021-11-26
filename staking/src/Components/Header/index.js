@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   createStyles,
@@ -10,8 +10,15 @@ import {
   Button,
   IconButton,
   Box,
+  Hidden,
+  Menu,
+  MenuItem,
+  withStyles
 } from "@material-ui/core";
-import { Menu as MenuIcon } from "@material-ui/icons"
+import {
+  Menu as MenuIcon,
+  AccountCircle,
+} from "@material-ui/icons"
 import styles from "./Header.module.scss";
 
 const NotLoggedIn = () => {
@@ -52,10 +59,41 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+const StyledMenu = withStyles({
+  paper: {
+    background: "linear-gradient(180deg, #263556 11.53%, #242D41 86.09%)",
+    color: "#79B9F4",
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
 const Header = (props) => {
   const { path } = props;
   const history = useHistory();
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -69,52 +107,88 @@ const Header = (props) => {
           <MenuIcon />
         </IconButton>
         <Box className={styles.navbtns}>
-          <Button
-            variant="text"
-            color="primary"
-            className={styles.navbtn}
-            style={{ color: path === "/" ? "#79B9F4" : "#57688D" }}
-            onClick={() => {
-              history.push("/")
-            }}
-          >
-            Overview
-          </Button>
-          <Button
-            variant="text"
-            color="primary"
-            className={styles.navbtn}
-            style={{ color: path === "/pools" ? "#79B9F4" : "#57688D" }}
-            onClick={() => {
-              history.push("/pools")
-            }}
-          >
-            Staking
-          </Button>
-          <Button
-            variant="text"
-            color="primary"
-            className={styles.navbtn}
-            style={{ color: path === "/rewards" ? "#79B9F4" : "#57688D" }}
-            onClick={() => {
-              history.push("/rewards")
-            }}
-          >
-            Rewards
-          </Button>
-          <Button
-            variant="text"
-            color="primary"
-            className={styles.navbtn}
-            style={{ color: path === "/vesting" ? "#79B9F4" : "#57688D" }}
-            onClick={() => {
-              history.push("/vesting")
-            }}
-          >
-            Vesting
-          </Button>
-          <Box border="1px solid #57688D" height="38px" margin="0 10px" />
-          <NotLoggedIn />
+          <Hidden mdUp>
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <StyledMenu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={() => history.push("/")}>Overview</MenuItem>
+                <MenuItem onClick={() => history.push("/pools")}>Staking</MenuItem>
+                <MenuItem onClick={() => history.push("/rewards")}>Rewards</MenuItem>
+                <MenuItem onClick={() => history.push("/vesting")}>Vesting</MenuItem>
+                <MenuItem onClick={handleClose}>Login</MenuItem>
+              </StyledMenu>
+            </div>
+          </Hidden>
+          <Hidden smDown>
+            <Button
+              variant="text"
+              color="primary"
+              className={styles.navbtn}
+              style={{ color: path === "/" ? "#79B9F4" : "#57688D" }}
+              onClick={() => {
+                history.push("/")
+              }}
+            >
+              Overview
+            </Button>
+            <Button
+              variant="text"
+              color="primary"
+              className={styles.navbtn}
+              style={{ color: path === "/pools" ? "#79B9F4" : "#57688D" }}
+              onClick={() => {
+                history.push("/pools")
+              }}
+            >
+              Staking
+            </Button>
+            <Button
+              variant="text"
+              color="primary"
+              className={styles.navbtn}
+              style={{ color: path === "/rewards" ? "#79B9F4" : "#57688D" }}
+              onClick={() => {
+                history.push("/rewards")
+              }}
+            >
+              Rewards
+            </Button>
+            <Button
+              variant="text"
+              color="primary"
+              className={styles.navbtn}
+              style={{ color: path === "/vesting" ? "#79B9F4" : "#57688D" }}
+              onClick={() => {
+                history.push("/vesting")
+              }}
+            >
+              Vesting
+            </Button>
+            <Box border="1px solid #57688D" height="38px" margin="0 10px" />
+            <NotLoggedIn />
+          </Hidden>
         </Box>
       </Toolbar>
     </AppBar>

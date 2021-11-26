@@ -41,6 +41,12 @@ const StakeAndApproveStyle = {
   background: "#1785EB"
 }
 
+const centerAllFlexStyle = {
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+}
+
 const Staking = () => {
   const [stakingModalState, openStakingModal] = useState(false);
   const [connectWalletState, setConnectWalletModal] = useState(false);
@@ -67,41 +73,45 @@ const Staking = () => {
               {rows.map((row, idx) => (
                 <TableRow key={idx}>
                   <StyledTableCell component="th" scope="row">
-                    <img src={CoinicaStakingIcon} alt="" width="40px" style={{ marginRight: "5px" }} />
-                    {row.name}
+                    <Box style={centerAllFlexStyle}>
+                      <img src={CoinicaStakingIcon} alt="" width="40px" style={{ marginRight: "5px" }} />
+                      {row.name}
+                    </Box>
                   </StyledTableCell>
                   <StyledTableCell align="center">{row.tvl}</StyledTableCell>
                   <StyledTableCell align="center">{row.apy}</StyledTableCell>
                   <StyledTableCell align="left">
-                    {row.isApproved ? (
+                    <Box style={centerAllFlexStyle}>
+                      {row.isApproved ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          style={StakeAndApproveStyle}
+                          onClick={() => openStakingModal(true)}
+                        >
+                          Stake
+                        </Button>  
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          style={StakeAndApproveStyle}
+                          onClick={() => setConnectWalletModal(true)}
+                        >
+                          Approve
+                        </Button>  
+                      )}
                       <Button
                         variant="contained"
-                        color="primary"
-                        style={StakeAndApproveStyle}
-                        onClick={() => openStakingModal(true)}
+                        color="secondary"
+                        style={{ background: "linear-gradient(180deg, #354B79 4.17%, #2C2C4E 95.31%)",
+                        color: "#9DC8EF",
+                        filter: "drop-shadow(0px 0px 4px #0F1223)"
+                      }}
                       >
-                        Stake
+                        Details
                       </Button>  
-                    ) : (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        style={StakeAndApproveStyle}
-                        onClick={() => setConnectWalletModal(true)}
-                      >
-                        Approve
-                      </Button>  
-                    )}
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      style={{ background: "linear-gradient(180deg, #354B79 4.17%, #2C2C4E 95.31%)",
-                      color: "#9DC8EF",
-                      filter: "drop-shadow(0px 0px 4px #0F1223)"
-                    }}
-                    >
-                      Details
-                    </Button>  
+                    </Box>
                   </StyledTableCell>
                 </TableRow>
               ))}
