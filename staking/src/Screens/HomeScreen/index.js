@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Box, Grid, Button } from "@material-ui/core";
+import {
+  Box,
+  Grid,
+  Button,
+  withWidth,
+} from "@material-ui/core";
 import Chart from 'react-apexcharts'
 import {
   CoinicaStakingIcon,
@@ -13,69 +18,71 @@ import {
 } from "./Assets";
 import styles from "./HomeScreen.module.scss";
 
-var options = {
-  chart: {
-    height: 280,
-    type: "radialBar",
-  },
-  series: [27],
-  colors: ["#1752EB"],
-  plotOptions: {
-    radialBar: {
-      hollow: {
-        margin: 0,
-        size: "65%",
-        background: "transparent"
-      },
-      track: {
-        dropShadow: {
-          enabled: true,
-          top: 2,
-          left: 0,
-          blur: 4,
-          opacity: 0.15,
-        },
-        background: "#1B2539",
-      },
-      dataLabels: {
-        name: {
-          offsetY: -10,
-          color: "#57688D",
-          fontSize: "14px"
-        },
-        value: {
-          offsetY: 5,
-          color: "#79B9F4",
-          fontSize: "22px",
-          fontWeight: 700,
-          show: true,
-          formatter: () => {
-            return "$924.12k"
-          }
-        },
-      }
-    }
-  },
-  fill: {
-    type: "gradient",
-    gradient: {
-      shade: "dark",
-      type: "vertical",
-      gradientToColors: ["#1785EB"],
-      stops: [0, 100]
-    }
-  },
-  stroke: {
-    lineCap: "round"
-  },
-  labels: ["Total Distributed"]
-};
-
-const HomeScreen = () => {
+const HomeScreen = ({ width }) => {
   const history = useHistory();
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  const options = {
+    chart: {
+      height: 280,
+      type: "radialBar",
+    },
+    series: [27],
+    colors: ["#1752EB"],
+    plotOptions: {
+      radialBar: {
+        hollow: {
+          margin: 0,
+          size: "65%",
+          background: "transparent"
+        },
+        track: {
+          dropShadow: {
+            enabled: true,
+            top: 2,
+            left: 0,
+            blur: 4,
+            opacity: 0.15,
+          },
+          background: "#1B2539",
+        },
+        dataLabels: {
+          name: {
+            offsetY: -10,
+            color: "#57688D",
+            fontSize: width === "xs" ? "8px" : "14px",
+          },
+          value: {
+            offsetY: 5,
+            color: "#79B9F4",
+            fontSize: width === "xs" ? "14px" : "22px",
+            fontWeight: 700,
+            show: true,
+            formatter: () => {
+              return "$924.12k"
+            }
+          },
+        }
+      }
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "dark",
+        type: "vertical",
+        gradientToColors: ["#1785EB"],
+        stops: [0, 100]
+      }
+    },
+    stroke: {
+      lineCap: "round"
+    },
+    labels: ["Total Distributed"]
+  };
+
   return (
     <Grid container className={styles.container}>
       <Box className={styles.mainheaderContainer}>
@@ -139,13 +146,12 @@ const HomeScreen = () => {
       <Box className={styles.ccaRewardsAndVestingContainer}>
         <Box className={styles.ccaRewardsAndVesting}>
           <Box className={styles.ccaRewards}>
-            <Box textAlign="center">
+            <Box className={styles.chartContainer}>
               <Chart
+                className={styles.chart}
                 options={options}
                 series={options.series}
                 type="radialBar"
-                width={400}
-                height={256}
               />
               <h1>CCA Rewards</h1>
             </Box>
@@ -186,4 +192,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default withWidth()(HomeScreen);

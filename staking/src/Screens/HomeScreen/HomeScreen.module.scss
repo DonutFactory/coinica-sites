@@ -14,6 +14,7 @@
     background: linear-gradient(62.86deg, #242D41 -32.28%, #161C2B 84.45%);
     filter: drop-shadow(0px 0px 6px #0F1223);
     max-width: 986px;
+    min-width: 271px;
     padding: 40px 20px;
   
     .main_icon {
@@ -66,6 +67,7 @@
     background: #0E141F;
     filter: drop-shadow(0px 0px 6px #0F1223);
     max-width: 986px;
+    min-width: 271px;
     padding: 20px;
 
     .totalStaked {
@@ -125,6 +127,7 @@
     background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
     box-shadow: 0px 0px 6px #0F1223;
     min-height: 400px;
+    min-width: 271px;
     width: 480px;
     padding: 50px;
     margin-right: 13px;
@@ -144,6 +147,7 @@
     background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
     box-shadow: 0px 0px 6px #0F1223;
     min-height: 400px;
+    min-width: 271px;
     width: 480px;
     padding: 50px;
     margin-left: 13px;
@@ -185,6 +189,7 @@
     justify-content: center;
     background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
     box-shadow: 0px 0px 6px #0F1223;
+    min-width: 271px;
     height: 400px;
     width: 480px;
     padding: 0 50px 20px 50px;
@@ -197,6 +202,14 @@
 
     h1 {
       margin-top: 0px !important;
+    }
+
+    .chartContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .ccaRewardsValue {
@@ -219,6 +232,7 @@
   .vesting {
     background: linear-gradient(180deg, #232C40 0%, #171D2C 100%);
     box-shadow: 0px 0px 6px #0F1223;
+    min-width: 271px;
     height: 400px;
     width: 480px;
     padding: 50px;
