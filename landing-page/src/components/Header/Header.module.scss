@@ -1,0 +1,159 @@
+@import "../../assets/scss/colors.scss";
+@import "../../assets/scss/mixin.scss";
+
+// spacing
+$spacing-md: 16px;
+$spacing-lg: 32px;
+
+// border radius
+$borderRadius: 22px;
+
+// header height
+$headerHeight: 70px;
+
+.header {
+  background: $header-dark;
+  width: 100%;
+  height: $headerHeight;
+  padding: 0 1.5rem;
+
+  @include breakpoint(md) {
+    padding: 0 3rem;
+  }
+  transition: 0.3s ease all;
+
+  &__content {
+    overflow: hidden;
+    color: $header-light;
+    margin: 0 auto;
+    max-width: 1920px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 100;
+
+    &__logo {
+      font-size: 2rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: $header-light;
+    }
+
+    &__nav {
+      top: 0;
+      right: 100%;
+      bottom: 0;
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: rgba($header-dark, 0.9);
+      backdrop-filter: blur(2px);
+      transform: translate(0);
+      transition: 0.3s ease transform;
+
+      @include breakpoint(md) {
+        transform: none;
+        flex-direction: row;
+        background: transparent;
+        width: auto;
+        height: 100%;
+        position: static;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: $spacing-lg;
+        @include breakpoint(md) {
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 0;
+          margin-right: calc(0.5rem + #{$spacing-md});
+        }
+        li {
+          &:not(:last-child) {
+            margin-bottom: $spacing-lg;
+            @include breakpoint(md) {
+              margin-bottom: 0;
+              margin-right: $spacing-md;
+            }
+          }
+          a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 400;
+            padding: 0.75rem 1.25rem;
+            border-radius: $borderRadius;
+            transition: 0.3s ease all;
+
+            &:hover {
+              background: rgba($header-light, 0.1);
+            }
+            &:active {
+              border-radius: calc(#{$borderRadius} + 6px);
+              background: linear-gradient(
+                rgba($header-light, 0.1),
+                rgba($header-light, 0.2)
+              );
+            }
+          }
+        }
+      }
+      button {
+        cursor: pointer;
+        outline: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: $borderRadius;
+        font-size: 1rem;
+        font-family: inherit;
+        background: $header-dark;
+        color: $header-primary;
+        border: 1px solid $header-primary;
+        transition: 0.3s ease all;
+
+        &:hover {
+          border-color: $header-dark;
+          background: rgba($header-primary, 1);
+          color: $header-dark;
+        }
+        &:active {
+          border-color: $header-primary;
+          background: linear-gradient(
+            rgba($header-primary, 0.2),
+            rgba($header-primary, 0.3)
+          );
+          color: $header-primary;
+        }
+      }
+
+      &.isMenu {
+        transform: translate(100%);
+      }
+    }
+
+    &__toggle {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 2rem;
+      transition: 0.3s ease all;
+      position: relative;
+
+      &:hover {
+        color: $header-primary;
+      }
+
+      @include breakpoint(md) {
+        display: none;
+      }
+    }
+  }
+}
