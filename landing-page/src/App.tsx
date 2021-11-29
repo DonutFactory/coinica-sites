@@ -12,16 +12,24 @@ function App() {
     <div className={styles.container}>
       <Header />
       <section className={styles.intro}>
-        <ScrollReveal>
-          <div className={[styles.maxWidth, styles.introContent].join(" ")}>
-            <img src={bgGirl} className={styles.bgGirl} alt="background girl" />
-            <img src={coinica} className={styles.coinicaText} alt="coinica" />
+        <ScrollReveal resetAnimation>
+          <div className={[styles.maxWidth, styles.intro__content].join(" ")}>
+            <img
+              src={bgGirl}
+              className={styles.intro__bgGirl}
+              alt="background girl"
+            />
+            <img
+              src={coinica}
+              className={styles.intro__coinicaText}
+              alt="coinica"
+            />
           </div>
         </ScrollReveal>
       </section>
       <section className={styles.about}>
         <ScrollReveal resetAnimation>
-          <div className={styles.aboutContent}>
+          <div className={styles.about__content}>
             <h4>About</h4>
             <p>
               Coinica is a decentralized autonomous organization (DAO) for
@@ -35,9 +43,9 @@ function App() {
       </section>
       <section className={styles.games}>
         <ScrollReveal resetAnimation>
-          <div className={[styles.maxWidth, styles.gamesContent].join(" ")}>
+          <div className={[styles.maxWidth, styles.games__content].join(" ")}>
             <h4>Games</h4>
-            <div className={styles.gamesList}>
+            <div className={styles.games__list}>
               <div>
                 <img src={logoMJ} alt="mahjong" loading="lazy" />
               </div>

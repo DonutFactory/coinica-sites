@@ -1,5 +1,6 @@
 @import "./src/assets/scss/utils";
 @import "./src/assets/scss/colors";
+@import "./src/assets/scss/mixin";
 
 .container {
   margin: 0px auto;
@@ -20,30 +21,36 @@
   height: 100%;
   display: flex;
   justify-content: center;
-}
 
-.introContent {
-  padding: 75px 20px 0px 20px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  &__content {
+    padding-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 
-  //   position:relative
-
-  .bgGirl {
-    max-width: 100%;
-    height: auto;
-    margin-top: 10px;
-    //   position: absolute;
-    //   bottom: -200px;
+    @include breakpoint(md) {
+      padding: 50px 20px 0px 20px;
+      justify-content: unset;
+    }
   }
 
-  .coinicaText {
-    max-width: 100%;
-    height: 228px;
+  &__bgGirl {
+    max-width: 90%;
+    height: auto;
+    margin-top: 10px;
 
-    @media screen and (max-width: 1800px) {
-      height: 150px;
+    @include breakpoint(md) {
+      max-width: 70%;
+    }
+  }
+
+  &__coinicaText {
+    max-width: 80%;
+    height: auto;
+
+    @include breakpoint(md) {
+      max-width: 30%;
     }
   }
 }
@@ -53,6 +60,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-position: center;
   width: 100%;
   height: 548px;
 
@@ -60,15 +68,23 @@
   align-items: center;
   justify-content: center;
 
-  padding: 130px 20px 0px 20px;
-}
+  padding: 0px 20px;
 
-.aboutContent {
-  width: 515px;
-  height: auto;
+  @include breakpoint(lg) {
+    padding-top: 130px;
+  }
 
-  display: flex;
-  flex-direction: column;
+  &__content {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoint(md) {
+      width: 515px;
+    }
+  }
 
   h4 {
     font-size: rem(32);
@@ -119,26 +135,42 @@
   align-items: center;
 
   padding: 100px 20px 0px 20px;
-}
 
-.gamesContent {
-  h4 {
-    font-size: rem(32);
-    font-weight: 900;
-    color: $text-primary-color;
+  &__content {
+    h4 {
+      font-size: rem(32);
+      font-weight: 900;
+      color: $text-primary-color;
 
-    margin-bottom: 25px;
+      margin-bottom: 25px;
+    }
   }
 
-  .gamesList {
+  &__list {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
+    height: 400px;
+    overflow: auto;
 
-    img {
-      max-width: 100%;
-      height: auto;
+    div {
+      text-align: center;
+      img {
+        max-width: 70%;
+        height: auto;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        @include breakpoint(lg) {
+          max-width: 100%;
+        }
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
-@import "../../assets/scss/colors.scss";
-@import "../../assets/scss/mixin.scss";
+@import "../../assets/scss/colors";
+@import "../../assets/scss/mixin";
 
 // spacing
 $spacing-md: 16px;
@@ -11,16 +11,32 @@ $borderRadius: 22px;
 // header height
 $headerHeight: 70px;
 
+$zIndexHeader: 500;
+
 .header {
+  position: relative;
   background: $header-dark;
   width: 100%;
   height: $headerHeight;
-  padding: 0 1.5rem;
 
-  @include breakpoint(md) {
-    padding: 0 3rem;
+  &__position {
+    position: absolute;
+    background: $header-dark;
+    width: inherit;
+    height: inherit;
+    padding: 0 1.5rem;
+    z-index: $zIndexHeader;
+    transition: height 0.4s;
+
+    @include breakpoint(md) {
+      padding: 0 3rem;
+    }
   }
-  transition: 0.3s ease all;
+
+  &__positionFixed {
+    position: fixed;
+    height: 60px;
+  }
 
   &__content {
     overflow: hidden;
