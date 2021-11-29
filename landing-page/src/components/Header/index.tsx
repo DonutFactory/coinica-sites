@@ -3,7 +3,7 @@ import coinica from "../../assets/image/coinica.png";
 import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 
-import classes from "./Header.module.scss";
+import styles from "./Header.module.scss";
 // import { Link, useHistory } from "react-router-dom";
 
 const Header = () => {
@@ -13,6 +13,7 @@ const Header = () => {
     width: 0,
     height: 0,
   });
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,9 +22,18 @@ const Header = () => {
         height: window.innerHeight,
       });
     };
-    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -41,47 +51,55 @@ const Header = () => {
     //  history.push("/login);
   };
 
+  const headerPositionFixed = () => {
+    return scrollY > 100 ? styles.header__positionFixed : "";
+  };
+
   return (
-    <header className={classes.header}>
-      <div className={classes.header__content}>
-        <a href="/" className={classes.header__content__logo}>
-          <img src={coinica} width="auto" height="50" alt="logo" />
-        </a>
-        <nav
-          className={`${classes.header__content__nav} ${
-            menuOpen && size.width < 768 ? classes.isMenu : ""
-          }`}
-        >
-          <ul>
-            <li>
-              <a href="/" onClick={menuToggleHandler}>
-                Overview
-              </a>
-            </li>
-            <li>
-              <a href="/" onClick={menuToggleHandler}>
-                Staking
-              </a>
-            </li>
-            <li>
-              <a href="/" onClick={menuToggleHandler}>
-                Rewards
-              </a>
-            </li>
-            <li>
-              <a href="/" onClick={menuToggleHandler}>
-                Vesting
-              </a>
-            </li>
-          </ul>
-          <button onClick={loginHandler}>Log In</button>
-        </nav>
-        <div className={classes.header__content__toggle}>
-          {!menuOpen ? (
-            <BiMenuAltRight onClick={menuToggleHandler} />
-          ) : (
-            <AiOutlineClose onClick={menuToggleHandler} />
-          )}
+    <header className={styles.header}>
+      <div
+        className={[styles.header__position, headerPositionFixed()].join(" ")}
+      >
+        <div className={styles.header__content}>
+          <a href="/" className={styles.header__content__logo}>
+            <img src={coinica} width="auto" height="50" alt="logo" />
+          </a>
+          <nav
+            className={`${styles.header__content__nav} ${
+              menuOpen && size.width < 768 ? styles.isMenu : ""
+            }`}
+          >
+            <ul>
+              <li>
+                <a href="/" onClick={menuToggleHandler}>
+                  Overview
+                </a>
+              </li>
+              <li>
+                <a href="/" onClick={menuToggleHandler}>
+                  Staking
+                </a>
+              </li>
+              <li>
+                <a href="/" onClick={menuToggleHandler}>
+                  Rewards
+                </a>
+              </li>
+              <li>
+                <a href="/" onClick={menuToggleHandler}>
+                  Vesting
+                </a>
+              </li>
+            </ul>
+            <button onClick={loginHandler}>Log In</button>
+          </nav>
+          <div className={styles.header__content__toggle}>
+            {!menuOpen ? (
+              <BiMenuAltRight onClick={menuToggleHandler} />
+            ) : (
+              <AiOutlineClose onClick={menuToggleHandler} />
+            )}
+          </div>
         </div>
       </div>
     </header>
