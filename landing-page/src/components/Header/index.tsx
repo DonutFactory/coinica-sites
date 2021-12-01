@@ -71,24 +71,16 @@ const Header = () => {
           >
             <ul>
               <li>
-                <a href="/" onClick={menuToggleHandler}>
-                  Overview
-                </a>
+                <a href="https://staking.coinica.net/">Overview</a>
               </li>
               <li>
-                <a href="/" onClick={menuToggleHandler}>
-                  Staking
-                </a>
+                <a href="https://staking.coinica.net/pools">Staking</a>
               </li>
               <li>
-                <a href="/" onClick={menuToggleHandler}>
-                  Rewards
-                </a>
+                <a href="https://staking.coinica.net/rewards">Rewards</a>
               </li>
               <li>
-                <a href="/" onClick={menuToggleHandler}>
-                  Vesting
-                </a>
+                <a href="https://staking.coinica.net/vesting">Vesting</a>
               </li>
             </ul>
             <button onClick={loginHandler}>Log In</button>

@@ -8,6 +8,11 @@ import ScrollReveal from "./components/ScrollReveal";
 import styles from "./App.module.scss";
 
 function App() {
+  const getYear = () => {
+    const currentYear = new Date().getFullYear();
+    return `${currentYear - 1}-${currentYear}`;
+  };
+
   return (
     <div className={styles.container}>
       <Header />
@@ -63,7 +68,9 @@ function App() {
         <div>
           <a href="#/">Terms of Use</a> | <a href="#/">Privacy Policy</a>
         </div>
-        <div> 2020-2021 Coinica, All rights reserved</div>
+        <div>
+          <i> {getYear()} Coinica, All rights reserved</i>
+        </div>
       </footer>
     </div>
   );
