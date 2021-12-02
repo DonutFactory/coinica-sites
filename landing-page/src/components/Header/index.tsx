@@ -1,13 +1,36 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import coinica from "../../assets/image/coinica.png";
 import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
-
+import {
+  getProvider,
+  ethEnabled,
+  getChainId,
+  getAccounts,
+  onAccountChange,
+  onChainChange
+} from "../../services/metamask";
+import { AppCtx } from "../../App";
 import styles from "./Header.module.scss";
 // import { Link, useHistory } from "react-router-dom";
 
+interface CtxProps {
+  chainId?: any;
+  setChainId?: Function;
+  setWallet?: Function;
+  wallet?: any;
+  address?: any;
+  setAddress?: Function;
+  balance?: any;
+  setBalance?: Function;
+}
+
 const Header = () => {
+  const context = useContext<CtxProps>(AppCtx);
+  const currConnectedAdd = context?.address;
+  console.log({ context })
   // const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [size, setSize] = useState({
     width: 0,
@@ -46,9 +69,76 @@ const Header = () => {
     setMenuOpen((p) => !p);
   };
 
-  const loginHandler = () => {
+  const handleAccountsChanged = (accounts: any) => {
+    if (typeof (context.setAddress) === "function" && typeof (context.setBalance) === "function") {
+      if (accounts.length === 0) {
+        context.setAddress(null);
+      } else if (accounts[0] !== currConnectedAdd) {
+        context.setAddress(accounts[0])
+      }
+    }
+  }
+
+  const loginHandler = async () => {
     //  menuToggleHandler();
     //  history.push("/login);
+    const provider = await getProvider()
+    if (provider) {
+      if (provider !== window.ethereum) {
+        alert("Can't connect to MetaMask. Do you have multiple wallets installed?");
+      } else {
+        if (!(await ethEnabled())) {
+          return
+        }
+
+        if (typeof (context.setWallet) === "function") {
+          context.setWallet(provider)
+        }
+
+        /********************************************/
+        /* Handle chain (network) and chainChanged  */
+        /********************************************/
+        getChainId([], (response: any) => {
+          if (response !== "0x4") {
+            alert("Please connect to Rinkeby Test Network");
+            window.location.reload();
+          }
+          console.log({ getChainId: response })
+          if (typeof (context.setChainId) === "function") {
+            context.setChainId(response)
+          }
+        }, (err: any) => {
+          console.log({ getChainIdErr: err })
+          if (typeof (context.setChainId) === "function") {
+            context.setChainId(null)
+          }
+        })
+
+        /*******************************/
+        /* Access the user's accounts  */
+        /*******************************/
+        getAccounts([], (accounts: any) => {
+          handleAccountsChanged(accounts)
+        }, (err: any) => {
+          console.log({ getAccountsErr: err })
+          if (err.code === 4001) {
+            // EIP-1193 userRejectedRequest error
+            // If this happens, the user rejected the connection request.
+            alert('Please connect to MetaMask')
+          } else {
+            alert('Error occured in connecting to MetaMask')
+            console.error({ getAccountsError: err });
+          }
+        })
+
+        onAccountChange(handleAccountsChanged)
+        onChainChange(() => {
+          window.location.reload();
+        })
+      }
+    } else {
+      alert("Install metamask extension");
+    }
   };
 
   const headerPositionFixed = () => {
@@ -83,7 +173,13 @@ const Header = () => {
                 <a href="https://staking.coinica.net/vesting">Vesting</a>
               </li>
             </ul>
-            <button onClick={loginHandler}>Log In</button>
+            <button onClick={loginHandler}>
+              {
+                loading ? "Connecting..." :
+                currConnectedAdd ? `0x..${currConnectedAdd.slice(-7)}` :
+                "Connect Wallet"
+              }
+            </button>
           </nav>
           <div className={styles.header__content__toggle}>
             {!menuOpen ? (
