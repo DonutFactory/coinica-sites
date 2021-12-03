@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import coinica from "../../assets/image/coinica.png";
 import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
@@ -8,7 +8,7 @@ import {
   getChainId,
   getAccounts,
   onAccountChange,
-  onChainChange
+  onChainChange,
 } from "../../services/metamask";
 import { AppCtx } from "../../App";
 import styles from "./Header.module.scss";
@@ -25,10 +25,15 @@ interface CtxProps {
   setBalance?: Function;
 }
 
-const Header = () => {
+type Props = {
+  scrollTo: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+};
+
+const Header = ({ scrollTo }: Props) => {
   const context = useContext<CtxProps>(AppCtx);
   const currConnectedAdd = context?.address;
-  console.log({ context })
+  console.log({ context });
+
   // const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,86 +75,101 @@ const Header = () => {
   };
 
   const handleAccountsChanged = (accounts: any) => {
-    if (typeof (context.setAddress) === "function" && typeof (context.setBalance) === "function") {
+    if (
+      typeof context.setAddress === "function" &&
+      typeof context.setBalance === "function"
+    ) {
       if (accounts.length === 0) {
         context.setAddress(null);
       } else if (accounts[0] !== currConnectedAdd) {
-        context.setAddress(accounts[0])
+        context.setAddress(accounts[0]);
       }
     }
-  }
+  };
 
   const loginHandler = async () => {
     //  menuToggleHandler();
     //  history.push("/login);
-    const provider = await getProvider()
+    const provider = await getProvider();
     if (provider) {
       if (provider !== window.ethereum) {
-        alert("Can't connect to MetaMask. Do you have multiple wallets installed?");
+        alert(
+          "Can't connect to MetaMask. Do you have multiple wallets installed?"
+        );
       } else {
         if (!(await ethEnabled())) {
-          return
+          return;
         }
 
-        if (typeof (context.setWallet) === "function") {
-          context.setWallet(provider)
+        if (typeof context.setWallet === "function") {
+          context.setWallet(provider);
         }
 
         /********************************************/
         /* Handle chain (network) and chainChanged  */
         /********************************************/
-        getChainId([], (response: any) => {
-          if (response !== "0x4") {
-            alert("Please connect to Rinkeby Test Network");
-            window.location.reload();
+        getChainId(
+          [],
+          (response: any) => {
+            if (response !== "0x4") {
+              alert("Please connect to Rinkeby Test Network");
+              window.location.reload();
+            }
+            console.log({ getChainId: response });
+            if (typeof context.setChainId === "function") {
+              context.setChainId(response);
+            }
+          },
+          (err: any) => {
+            console.log({ getChainIdErr: err });
+            if (typeof context.setChainId === "function") {
+              context.setChainId(null);
+            }
           }
-          console.log({ getChainId: response })
-          if (typeof (context.setChainId) === "function") {
-            context.setChainId(response)
-          }
-        }, (err: any) => {
-          console.log({ getChainIdErr: err })
-          if (typeof (context.setChainId) === "function") {
-            context.setChainId(null)
-          }
-        })
+        );
 
         /*******************************/
         /* Access the user's accounts  */
         /*******************************/
-        getAccounts([], (accounts: any) => {
-          handleAccountsChanged(accounts)
-        }, (err: any) => {
-          console.log({ getAccountsErr: err })
-          if (err.code === 4001) {
-            // EIP-1193 userRejectedRequest error
-            // If this happens, the user rejected the connection request.
-            alert('Please connect to MetaMask')
-          } else {
-            alert('Error occured in connecting to MetaMask')
-            console.error({ getAccountsError: err });
+        getAccounts(
+          [],
+          (accounts: any) => {
+            handleAccountsChanged(accounts);
+          },
+          (err: any) => {
+            console.log({ getAccountsErr: err });
+            if (err.code === 4001) {
+              // EIP-1193 userRejectedRequest error
+              // If this happens, the user rejected the connection request.
+              alert("Please connect to MetaMask");
+            } else {
+              alert("Error occured in connecting to MetaMask");
+              console.error({ getAccountsError: err });
+            }
           }
-        })
+        );
 
-        onAccountChange(handleAccountsChanged)
+        onAccountChange(handleAccountsChanged);
         onChainChange(() => {
           window.location.reload();
-        })
+        });
       }
     } else {
       alert("Install metamask extension");
     }
   };
+  // const loginHandler = () => {
+  //  menuToggleHandler();
+  //  history.push("/login);
+  // };
 
-  const headerPositionFixed = () => {
-    return scrollY > 100 ? styles.header__positionFixed : "";
+  const headerNavHeight = () => {
+    return scrollY > 100 ? styles.header__scrolledNavHeight : "";
   };
 
   return (
     <header className={styles.header}>
-      <div
-        className={[styles.header__position, headerPositionFixed()].join(" ")}
-      >
+      <div className={[styles.header__position, headerNavHeight()].join(" ")}>
         <div className={styles.header__content}>
           <a href="/" className={styles.header__content__logo}>
             <img src={coinica} width="auto" height="50" alt="logo" />
@@ -161,6 +181,11 @@ const Header = () => {
           >
             <ul>
               <li>
+                <a href="#/" onClick={(e) => scrollTo(e)}>
+                  Presale
+                </a>
+              </li>
+              {/* <li>
                 <a href="https://staking.coinica.net/">Overview</a>
               </li>
               <li>
@@ -171,14 +196,14 @@ const Header = () => {
               </li>
               <li>
                 <a href="https://staking.coinica.net/vesting">Vesting</a>
-              </li>
+              </li> */}
             </ul>
             <button onClick={loginHandler}>
-              {
-                loading ? "Connecting..." :
-                currConnectedAdd ? `0x..${currConnectedAdd.slice(-7)}` :
-                "Connect Wallet"
-              }
+              {loading
+                ? "Connecting..."
+                : currConnectedAdd
+                ? `0x..${currConnectedAdd.slice(-7)}`
+                : "Connect Wallet"}
             </button>
           </nav>
           <div className={styles.header__content__toggle}>

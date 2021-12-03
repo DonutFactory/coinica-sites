@@ -20,21 +20,21 @@ $zIndexHeader: 500;
   height: $headerHeight;
 
   &__position {
-    position: absolute;
+    position: fixed;
     background: $header-dark;
     width: inherit;
     height: inherit;
     padding: 0 1.5rem;
     z-index: $zIndexHeader;
-    transition: height 0.4s;
+    transition: all ease-in 0.4s;
 
     @include breakpoint(md) {
       padding: 0 3rem;
     }
   }
 
-  &__positionFixed {
-    position: fixed;
+  &__scrolledNavHeight {
+    box-shadow: 0px 2px 5px 1px #181f2e;
     height: 60px;
   }
 

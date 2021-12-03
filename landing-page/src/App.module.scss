@@ -4,7 +4,7 @@
 
 .container {
   margin: 0px auto;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 
   font-family: "Roboto";
@@ -125,6 +125,71 @@
   }
 }
 
+.presale {
+  background: linear-gradient(180deg, #232c40, #171d2c);
+  width: 100%;
+  height: 560px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h4 {
+    text-transform: uppercase;
+    color: #f479b1;
+    font-size: rem(30);
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    font-size: rem(18);
+
+    li {
+      p {
+        color: $header-light;
+        font-size: rem(16);
+        font-weight: 700;
+      }
+      strong {
+        color: $text-primary-color;
+      }
+    }
+  }
+
+  &__totalDistributed {
+    text-align: center;
+    margin: 5px 0px;
+
+    p {
+      color: $text-primary-color;
+      font-weight: 500;
+    }
+  }
+
+  &__contractAddress {
+    text-align: center;
+    margin-top: 40px;
+    p {
+      color: $header-light;
+      font-weight: 700;
+    }
+
+    a {
+      color: $text-primary-color;
+      transition: color 0.2s;
+      text-decoration: none;
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+}
+
 .games {
   background: linear-gradient(180deg, #161e2f 45%, #2c406a 100%);
   width: 100%;
@@ -175,11 +240,6 @@
   }
 }
 
-.maxWidth {
-  // background-color: red;
-  max-width: 1800px;
-}
-
 .footerMeta {
   background-color: $primary-darker;
   text-align: center;
@@ -200,4 +260,26 @@
       color: #fff;
     }
   }
+}
+
+.pulsate {
+  animation: pulsate 3s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 1;
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.maxWidth {
+  max-width: 1800px;
 }
