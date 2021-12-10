@@ -294,7 +294,13 @@ function App() {
                   <li>
                     <p>Exchange volume</p>
                     <div className={styles.tokenRates}>
-                      <strong>No data</strong>
+                      {isInitializing ? (
+                        <div className={styles.loader}></div>
+                      ) : (
+                        <strong style={{ marginLeft: "5px" }}>
+                          No data
+                        </strong>
+                      )}
                     </div>
                   </li>
                 </ul>
