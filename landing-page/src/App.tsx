@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { ChainId, Token, WETH, Fetcher, Route } from "@uniswap/sdk";
 import thousandSeparator from "./helpers/thousandSeparator";
+import FBMessengerChat from "./components/FBMessengerChat";
 import bgGirl from "./assets/image/bg-girl.png";
 import coinica from "./assets/image/coinica.png";
 import logoMJ from "./assets/image/logo-mj.png";
@@ -199,6 +200,7 @@ function App() {
       }}
     >
       <div className={styles.container}>
+        <FBMessengerChat pageId="101226919086882" xfbml={true} />
         <Header scrollTo={scrollTo} />
         <section className={styles.intro}>
           <ScrollReveal resetAnimation>
@@ -316,15 +318,15 @@ function App() {
             <div className={[styles.maxWidth, styles.games__content].join(" ")}>
               <h4>Games</h4>
               <div className={styles.games__list}>
-                <div>
+                <a href="https://app.coinica.net/game/mahjong">
                   <img src={logoMJ} alt="mahjong" loading="lazy" />
-                </div>
-                <div>
+                </a>
+                <a href="https://app.coinica.net/game/ghostquest">
                   <img src={logoGQ} alt="ghost quest" loading="lazy" />
-                </div>
-                <div>
+                </a>
+                <a href="https://app.coinica.net/game/treasurehunt">
                   <img src={logoTH} alt="treasure hunt" loading="lazy" />
-                </div>
+                </a>
               </div>
             </div>
           </ScrollReveal>

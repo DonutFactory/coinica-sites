@@ -365,9 +365,6 @@ const Header = ({ scrollTo }: Props) => {
                 ? `0x..${currConnectedAdd.slice(-7)}`
                 : "Connect Wallet"}
             </button>
-            <button onClick={fetchUniswapExchangeRate}>
-              test
-            </button>
           </nav>
           <div className={styles.header__content__toggle}>
             {!menuOpen ? (
