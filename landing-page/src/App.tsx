@@ -1,4 +1,6 @@
 import React, { useRef } from "react";
+import { ChainId, Token, WETH, Fetcher, Route } from "@uniswap/sdk";
+import thousandSeparator from "./helpers/thousandSeparator";
 import bgGirl from "./assets/image/bg-girl.png";
 import coinica from "./assets/image/coinica.png";
 import logoMJ from "./assets/image/logo-mj.png";
@@ -11,12 +13,102 @@ import styles from "./App.module.scss";
 
 export const AppCtx = React.createContext({});
 
+const IS_DEV = process.env.REACT_APP_IS_DEV === "true" ? true : false;
+const TOKEN_ADDRESS = process.env.REACT_APP_TOKEN_ADDRESS;
+const ETHERSCAN_API = process.env.REACT_APP_ETHERSCAN_API_KEY;
+const ETHERSCAN_NETWORK = IS_DEV ? process.env.REACT_APP_ETHERSCAN_TEST_NET : process.env.REACT_APP_ETHERSCAN_MAIN_NET; 
+
+const CNCA = new Token(
+  ChainId.RINKEBY,
+  "0x5b7436a078ea1e7cd0d2abc22a178f7865841787",
+  18
+);
+
+console.log({ CNCA })
+
+
 function App() {
   const [chainId, setChainId] = React.useState(null);
   const [wallet, setWallet] = React.useState(null);
   const [address, setAddress] = React.useState(null);
   const [balance, setBalance] = React.useState(null);
   const refScroll = useRef<HTMLDivElement>(null);
+
+  // TOKEN DATA
+  const [isInitializing, setInitializingTokenRate] = React.useState(true);
+  const [totalSupply, setTotalSupply] = React.useState<any>(null);
+  const [wethValue, setWethValue] = React.useState<any>(null);
+  const [CNCA_to_WETH, setCNCA_to_WETH] = React.useState<any>(null); // 1 CNCA to WETH
+
+  const circulatingSupply = !isInitializing ? "300" : "0"
+  const totalDistributed = !isInitializing ? ((+circulatingSupply)/(+totalSupply))*100 : 0;
+  const remainingSupply = !isInitializing ? ((+totalSupply) - (+circulatingSupply)).toFixed(2) : "0"
+
+  const fetchUniswapExchangeRate = async() => {
+    try {
+      /**
+       * ******************
+       *     UNISWAP-V2   *
+       * ******************
+       */
+      const pair = await Fetcher.fetchPairData(CNCA, WETH[CNCA.chainId]);
+      const route = new Route([pair], WETH[CNCA.chainId]);
+      const cnca_to_weth_rate = route.midPrice.invert().toSignificant(6);
+      setCNCA_to_WETH(cnca_to_weth_rate);
+      console.log({ fetchUniswapExchangeRate: cnca_to_weth_rate })
+    } catch (e) {
+      console.log({ ERROR_FETCHING_CNCA_RATE: e })
+    }
+  }
+
+  const fetchEthValue = async() => {
+    const response = await fetch("https://api.coinbase.com/v2/prices/ETH-USD/spot");
+    const { data } = await response.json();
+    if (data?.amount && data?.base === "ETH" && data?.currency === "USD") {
+      setWethValue(data?.amount)
+      console.log(data)
+    }
+  }
+
+  const fetchTotalSupply = async() => {
+    const response = await fetch(`https://api${IS_DEV ? `-${ETHERSCAN_NETWORK}` : ""}.etherscan.io/api?module=stats&action=tokenSupply&contractaddress=${TOKEN_ADDRESS}&apikey=${ETHERSCAN_API}`)
+    const { message, result, status } = await response.json();
+    if (message === "OK" && status === "1" && result !== "0") {
+      const totalToken = (result + "").slice(0, -18);
+      setTotalSupply(totalToken)
+      console.log({ totalToken })
+    }
+  }
+
+  const getTokenValue = () => {
+    if (!isInitializing) {
+      if (CNCA_to_WETH !== null && wethValue !== null) {
+        return `$${+(CNCA_to_WETH * wethValue).toFixed(3)}`;
+      }
+      if (CNCA_to_WETH !== null && wethValue === null) {
+        return `${(+CNCA_to_WETH).toFixed(6)} WETH`
+      }
+    }
+  }
+
+  const initializeTokenRate = async() => {
+    setInitializingTokenRate(true);
+    try {
+      console.log('FETCHING UNISWAP EXCHANGE RATE');
+      await fetchUniswapExchangeRate();
+      console.log('FETCHING ETH VALUE');
+      await fetchEthValue();
+      console.log('FETCHING TOTAL SUPPLY');
+      await fetchTotalSupply();
+      setInitializingTokenRate(false);
+    } catch (e) {
+      setInitializingTokenRate(false);
+    }
+  }
+
+  React.useEffect(() => {
+    initializeTokenRate();
+  }, [])
 
   const getYear = () => {
     const currentYear = new Date().getFullYear();
@@ -38,7 +130,7 @@ function App() {
       height: 300,
       type: "radialBar",
     },
-    series: [27],
+    series: [totalDistributed],
     colors: ["#1752EB"],
     plotOptions: {
       radialBar: {
@@ -72,7 +164,7 @@ function App() {
             fontWeight: 700,
             show: true,
             formatter: () => {
-              return "0";
+              return `${(+totalDistributed).toFixed(2)}%`;
             },
           },
         },
@@ -149,11 +241,27 @@ function App() {
                 <ul>
                   <li>
                     <p>Token total supply</p>
-                    <strong>0</strong>
+                    <div className={styles.tokenRates}>
+                      {isInitializing ? (
+                        <div className={styles.loader}></div>
+                      ) : (
+                        <strong>
+                          {thousandSeparator(totalSupply)}
+                        </strong>
+                      )}
+                    </div>
                   </li>
                   <li>
                     <p>Token remaining supply</p>
-                    <strong>0</strong>
+                    <div className={styles.tokenRates}>
+                      {isInitializing ? (
+                        <div className={styles.loader}></div>
+                      ) : (
+                        <strong>
+                          {thousandSeparator(remainingSupply)}
+                        </strong>
+                      )}
+                    </div>
                   </li>
                 </ul>
 
@@ -167,21 +275,32 @@ function App() {
                     type="radialBar"
                   />
                 </div>
-                <ul>
+                <ul style={{ width: "450px" }}>
                   <li>
-                    <p>Current exchange rate</p>
-                    <strong>1 CNCA = 0.006</strong>
+                    <p>Current exchange rate (Uniswap)</p>
+                    <div className={styles.tokenRates}>
+                      <strong>1 CNCA =</strong>
+                      {isInitializing ? (
+                        <div className={styles.loader}></div>
+                      ) : (
+                        <strong style={{ marginLeft: "5px" }}>
+                          {getTokenValue()}
+                        </strong>
+                      )}
+                    </div>
                   </li>
                   <li>
                     <p>Exchange volume</p>
-                    <strong>0</strong>
+                    <div className={styles.tokenRates}>
+                      <strong>No data</strong>
+                    </div>
                   </li>
                 </ul>
               </div>
               <div className={styles.presale__contractAddress}>
                 <p>Contract Address</p>
                 <a
-                  href="https://rinkeby.etherscan.io/address/0x5b7436a078ea1e7cd0d2abc22a178f7865841787"
+                  href={`https://${ETHERSCAN_NETWORK}.etherscan.io/address/0x5b7436a078ea1e7cd0d2abc22a178f7865841787`}
                   target="_blank"
                   rel="noreferrer"
                 >
