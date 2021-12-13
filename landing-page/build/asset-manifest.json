@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.96762634.chunk.css",
+    "main.js": "/static/js/main.80f943e3.chunk.js",
+    "main.js.map": "/static/js/main.80f943e3.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.7ae0a195.js",
+    "runtime-main.js.map": "/static/js/runtime-main.7ae0a195.js.map",
+    "static/js/2.1a8a6b55.chunk.js": "/static/js/2.1a8a6b55.chunk.js",
+    "static/js/2.1a8a6b55.chunk.js.map": "/static/js/2.1a8a6b55.chunk.js.map",
+    "static/js/3.de56814b.chunk.js": "/static/js/3.de56814b.chunk.js",
+    "static/js/3.de56814b.chunk.js.map": "/static/js/3.de56814b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.96762634.chunk.css.map": "/static/css/main.96762634.chunk.css.map",
+    "static/js/2.1a8a6b55.chunk.js.LICENSE.txt": "/static/js/2.1a8a6b55.chunk.js.LICENSE.txt",
+    "static/media/App.module.scss": "/static/media/bg-intro.658e8c4b.png",
+    "static/media/bg-girl.ecaede7f.png": "/static/media/bg-girl.ecaede7f.png",
+    "static/media/coinica.e6dfc02a.png": "/static/media/coinica.e6dfc02a.png",
+    "static/media/logo-gq.df0754dd.png": "/static/media/logo-gq.df0754dd.png",
+    "static/media/logo-mj.195ec21e.png": "/static/media/logo-mj.195ec21e.png",
+    "static/media/logo-th.fb3c8792.png": "/static/media/logo-th.fb3c8792.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7ae0a195.js",
+    "static/js/2.1a8a6b55.chunk.js",
+    "static/css/main.96762634.chunk.css",
+    "static/js/main.80f943e3.chunk.js"
+  ]
+}
