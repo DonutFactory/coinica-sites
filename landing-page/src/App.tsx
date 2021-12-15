@@ -17,7 +17,9 @@ export const AppCtx = React.createContext({});
 const IS_DEV = process.env.REACT_APP_IS_DEV === "true" ? true : false;
 const TOKEN_ADDRESS = process.env.REACT_APP_TOKEN_ADDRESS;
 const ETHERSCAN_API = process.env.REACT_APP_ETHERSCAN_API_KEY;
-const ETHERSCAN_NETWORK = IS_DEV ? process.env.REACT_APP_ETHERSCAN_TEST_NET : process.env.REACT_APP_ETHERSCAN_MAIN_NET; 
+const ETHERSCAN_NETWORK = IS_DEV
+  ? process.env.REACT_APP_ETHERSCAN_TEST_NET
+  : process.env.REACT_APP_ETHERSCAN_MAIN_NET;
 
 const CNCA = new Token(
   ChainId.RINKEBY,
@@ -25,8 +27,7 @@ const CNCA = new Token(
   18
 );
 
-console.log({ CNCA })
-
+console.log({ CNCA });
 
 function App() {
   const [chainId, setChainId] = React.useState(null);
@@ -41,11 +42,15 @@ function App() {
   const [wethValue, setWethValue] = React.useState<any>(null);
   const [CNCA_to_WETH, setCNCA_to_WETH] = React.useState<any>(null); // 1 CNCA to WETH
 
-  const circulatingSupply = !isInitializing ? "300" : "0"
-  const totalDistributed = !isInitializing ? ((+circulatingSupply)/(+totalSupply))*100 : 0;
-  const remainingSupply = !isInitializing ? ((+totalSupply) - (+circulatingSupply)).toFixed(2) : "0"
+  const circulatingSupply = !isInitializing ? "300" : "0";
+  const totalDistributed = !isInitializing
+    ? (+circulatingSupply / +totalSupply) * 100
+    : 0;
+  const remainingSupply = !isInitializing
+    ? (+totalSupply - +circulatingSupply).toFixed(2)
+    : "0";
 
-  const fetchUniswapExchangeRate = async() => {
+  const fetchUniswapExchangeRate = async () => {
     try {
       /**
        * ******************
@@ -56,30 +61,36 @@ function App() {
       const route = new Route([pair], WETH[CNCA.chainId]);
       const cnca_to_weth_rate = route.midPrice.invert().toSignificant(6);
       setCNCA_to_WETH(cnca_to_weth_rate);
-      console.log({ fetchUniswapExchangeRate: cnca_to_weth_rate })
+      console.log({ fetchUniswapExchangeRate: cnca_to_weth_rate });
     } catch (e) {
-      console.log({ ERROR_FETCHING_CNCA_RATE: e })
+      console.log({ ERROR_FETCHING_CNCA_RATE: e });
     }
-  }
+  };
 
-  const fetchEthValue = async() => {
-    const response = await fetch("https://api.coinbase.com/v2/prices/ETH-USD/spot");
+  const fetchEthValue = async () => {
+    const response = await fetch(
+      "https://api.coinbase.com/v2/prices/ETH-USD/spot"
+    );
     const { data } = await response.json();
     if (data?.amount && data?.base === "ETH" && data?.currency === "USD") {
-      setWethValue(data?.amount)
-      console.log(data)
+      setWethValue(data?.amount);
+      console.log(data);
     }
-  }
+  };
 
-  const fetchTotalSupply = async() => {
-    const response = await fetch(`https://api${IS_DEV ? `-${ETHERSCAN_NETWORK}` : ""}.etherscan.io/api?module=stats&action=tokenSupply&contractaddress=${TOKEN_ADDRESS}&apikey=${ETHERSCAN_API}`)
+  const fetchTotalSupply = async () => {
+    const response = await fetch(
+      `https://api${
+        IS_DEV ? `-${ETHERSCAN_NETWORK}` : ""
+      }.etherscan.io/api?module=stats&action=tokenSupply&contractaddress=${TOKEN_ADDRESS}&apikey=${ETHERSCAN_API}`
+    );
     const { message, result, status } = await response.json();
     if (message === "OK" && status === "1" && result !== "0") {
       const totalToken = (result + "").slice(0, -18);
-      setTotalSupply(totalToken)
-      console.log({ totalToken })
+      setTotalSupply(totalToken);
+      console.log({ totalToken });
     }
-  }
+  };
 
   const getTokenValue = () => {
     if (!isInitializing) {
@@ -87,29 +98,29 @@ function App() {
         return `$${+(CNCA_to_WETH * wethValue).toFixed(3)}`;
       }
       if (CNCA_to_WETH !== null && wethValue === null) {
-        return `${(+CNCA_to_WETH).toFixed(6)} WETH`
+        return `${(+CNCA_to_WETH).toFixed(6)} WETH`;
       }
     }
-  }
+  };
 
-  const initializeTokenRate = async() => {
+  const initializeTokenRate = async () => {
     setInitializingTokenRate(true);
     try {
-      console.log('FETCHING UNISWAP EXCHANGE RATE');
+      console.log("FETCHING UNISWAP EXCHANGE RATE");
       await fetchUniswapExchangeRate();
-      console.log('FETCHING ETH VALUE');
+      console.log("FETCHING ETH VALUE");
       await fetchEthValue();
-      console.log('FETCHING TOTAL SUPPLY');
+      console.log("FETCHING TOTAL SUPPLY");
       await fetchTotalSupply();
       setInitializingTokenRate(false);
     } catch (e) {
       setInitializingTokenRate(false);
     }
-  }
+  };
 
   React.useEffect(() => {
     initializeTokenRate();
-  }, [])
+  }, []);
 
   const getYear = () => {
     const currentYear = new Date().getFullYear();
@@ -247,9 +258,7 @@ function App() {
                       {isInitializing ? (
                         <div className={styles.loader}></div>
                       ) : (
-                        <strong>
-                          {thousandSeparator(totalSupply)}
-                        </strong>
+                        <strong>{thousandSeparator(totalSupply)}</strong>
                       )}
                     </div>
                   </li>
@@ -259,9 +268,7 @@ function App() {
                       {isInitializing ? (
                         <div className={styles.loader}></div>
                       ) : (
-                        <strong>
-                          {thousandSeparator(remainingSupply)}
-                        </strong>
+                        <strong>{thousandSeparator(remainingSupply)}</strong>
                       )}
                     </div>
                   </li>
@@ -277,7 +284,7 @@ function App() {
                     type="radialBar"
                   />
                 </div>
-                <ul style={{ width: "450px" }}>
+                <ul>
                   <li>
                     <p>Current exchange rate (Uniswap)</p>
                     <div className={styles.tokenRates}>
@@ -297,9 +304,7 @@ function App() {
                       {isInitializing ? (
                         <div className={styles.loader}></div>
                       ) : (
-                        <strong style={{ marginLeft: "5px" }}>
-                          No data
-                        </strong>
+                        <strong style={{ marginLeft: "5px" }}>No data</strong>
                       )}
                     </div>
                   </li>
