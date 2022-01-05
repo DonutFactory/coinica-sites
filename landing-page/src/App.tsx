@@ -329,13 +329,13 @@ function App() {
             <div className={[styles.maxWidth, styles.games__content].join(" ")}>
               <h4>Games</h4>
               <div className={styles.games__list}>
-                <a href="https://app.coinica.net/game/mahjong">
+                <a href="https://app.coinica.net/game/mahjong" target="_blank">
                   <img src={logoMJ} alt="mahjong" loading="lazy" />
                 </a>
-                <a href="https://app.coinica.net/game/ghostquest">
+                <a href="https://app.coinica.net/game/ghostquest" target="_blank">
                   <img src={logoGQ} alt="ghost quest" loading="lazy" />
                 </a>
-                <a href="https://app.coinica.net/game/treasurehunt">
+                <a href="https://app.coinica.net/game/treasurehunt" target="_blank">
                   <img src={logoTH} alt="treasure hunt" loading="lazy" />
                 </a>
               </div>
