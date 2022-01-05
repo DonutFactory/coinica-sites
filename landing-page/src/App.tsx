@@ -211,7 +211,7 @@ function App() {
       }}
     >
       <div className={styles.container}>
-        <FBMessengerChat pageId="101226919086882" xfbml={true} />
+        <FBMessengerChat pageId="101226919086882" />
         <Header scrollTo={scrollTo} />
         <section className={styles.intro}>
           <ScrollReveal resetAnimation>
