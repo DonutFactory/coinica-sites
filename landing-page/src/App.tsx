@@ -10,6 +10,7 @@ import logoTH from "./assets/image/logo-th.png";
 import Header from "./components/Header";
 import ScrollReveal from "./components/ScrollReveal";
 import Chart from "react-apexcharts";
+import Footer from "./components/Footer";
 import styles from "./App.module.scss";
 
 export const AppCtx = React.createContext({});
@@ -122,10 +123,6 @@ function App() {
     initializeTokenRate();
   }, []);
 
-  const getYear = () => {
-    const currentYear = new Date().getFullYear();
-    return `${currentYear - 1}-${currentYear}`;
-  };
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -244,7 +241,7 @@ function App() {
             </div>
           </ScrollReveal>
         </section>
-        <section ref={refScroll} className={styles.presale}>
+        {/* <section ref={refScroll} className={styles.presale}>
           <ScrollReveal resetAnimation>
             <div
               className={[styles.maxWidth, styles.presale__content].join(" ")}
@@ -323,33 +320,26 @@ function App() {
               </div>
             </div>
           </ScrollReveal>
-        </section>
+        </section> */}
         <section className={styles.games}>
           <ScrollReveal resetAnimation>
             <div className={[styles.maxWidth, styles.games__content].join(" ")}>
               <h4>Games</h4>
               <div className={styles.games__list}>
-                <a href="https://app.coinica.net/game/mahjong" target="_blank">
+                <a href="https://app.coinica.net/game/mahjong" target="_blank" rel="noreferrer">
                   <img src={logoMJ} alt="mahjong" loading="lazy" />
                 </a>
-                <a href="https://app.coinica.net/game/ghostquest" target="_blank">
+                <a href="https://app.coinica.net/game/ghostquest" target="_blank" rel="noreferrer">
                   <img src={logoGQ} alt="ghost quest" loading="lazy" />
                 </a>
-                <a href="https://app.coinica.net/game/treasurehunt" target="_blank">
+                <a href="https://app.coinica.net/game/treasurehunt" target="_blank" rel="noreferrer">
                   <img src={logoTH} alt="treasure hunt" loading="lazy" />
                 </a>
               </div>
             </div>
           </ScrollReveal>
         </section>
-        <footer className={styles.footerMeta}>
-          <div>
-            <a href="#/">Terms of Use</a> | <a href="#/">Privacy Policy</a>
-          </div>
-          <div>
-            <i> {getYear()} Coinica, All rights reserved</i>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </AppCtx.Provider>
   );

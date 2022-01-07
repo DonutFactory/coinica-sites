@@ -1,0 +1,67 @@
+@import "./src/assets/scss/utils";
+@import "./src/assets/scss/colors";
+@import "./src/assets/scss/mixin";
+
+.footerMeta {
+    background-color: $primary-darker;
+    font-size: rem(14);
+    font-weight: 500;
+    padding: 3rem 10rem;
+    
+    .footerContent{
+        display: flex;
+        flex-direction: row;
+        padding: 20px 20px;
+    }
+
+    .footerLogo{
+        margin-right: 5rem;
+    }
+
+    a,
+    div {
+      color: $footer-text-color;
+      line-height: 20px;
+    }
+  
+    a {
+      text-decoration: none;
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    &__logo {
+        font-size: 2rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: $header-light;
+      }
+
+     
+
+      .footerLeft{
+        border-right: 1px solid rgba(255,255,255, 0.1);
+        padding-right: 3%;
+      }
+
+      .footerRight{
+        padding-left: 3%;
+
+        &__icons{
+            a{
+                font-size: x-large;
+                padding-right: 20px;
+            }
+
+            .facebook{
+                color:#4267B2;
+            }
+
+            .discord{
+                color: #7289DA;
+            }
+        }
+      }
+  }
+  

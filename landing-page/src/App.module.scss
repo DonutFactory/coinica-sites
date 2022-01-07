@@ -263,28 +263,6 @@
   }
 }
 
-.footerMeta {
-  background-color: $primary-darker;
-  text-align: center;
-  font-size: rem(14);
-  font-weight: 500;
-  padding-top: 15px;
-  padding-bottom: 15px;
-
-  a,
-  div {
-    color: $footer-text-color;
-    line-height: 20px;
-  }
-
-  a {
-    text-decoration: none;
-    &:hover {
-      color: #fff;
-    }
-  }
-}
-
 .pulsate {
   animation: pulsate 3s ease-out;
   animation-iteration-count: infinite;
