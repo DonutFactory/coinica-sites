@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { ChainId, Token, WETH, Fetcher, Route } from "@uniswap/sdk";
-import thousandSeparator from "./helpers/thousandSeparator";
-import FBMessengerChat from "./components/FBMessengerChat";
+// import Chart from "react-apexcharts";
+// import thousandSeparator from "./helpers/thousandSeparator";
 import bgGirl from "./assets/image/bg-girl.png";
 import coinica from "./assets/image/coinica.png";
 import logoMJ from "./assets/image/logo-mj.png";
@@ -9,8 +9,9 @@ import logoGQ from "./assets/image/logo-gq.png";
 import logoTH from "./assets/image/logo-th.png";
 import Header from "./components/Header";
 import ScrollReveal from "./components/ScrollReveal";
-import Chart from "react-apexcharts";
 import Footer from "./components/Footer";
+import RoadMap from "./components/RoadMap/RoadMap";
+import FBMessengerChat from "./components/FBMessengerChat";
 import styles from "./App.module.scss";
 
 export const AppCtx = React.createContext({});
@@ -122,7 +123,6 @@ function App() {
   React.useEffect(() => {
     initializeTokenRate();
   }, []);
-
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -321,18 +321,34 @@ function App() {
             </div>
           </ScrollReveal>
         </section> */}
+        <section className={styles.roadMap}>
+          <h4>Road map</h4>
+          <RoadMap />
+        </section>
         <section className={styles.games}>
           <ScrollReveal resetAnimation>
             <div className={[styles.maxWidth, styles.games__content].join(" ")}>
               <h4>Games</h4>
               <div className={styles.games__list}>
-                <a href="https://app.coinica.net/game/mahjong" target="_blank" rel="noreferrer">
+                <a
+                  href="https://app.coinica.net/game/mahjong"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img src={logoMJ} alt="mahjong" loading="lazy" />
                 </a>
-                <a href="https://app.coinica.net/game/ghostquest" target="_blank" rel="noreferrer">
+                <a
+                  href="https://app.coinica.net/game/ghostquest"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img src={logoGQ} alt="ghost quest" loading="lazy" />
                 </a>
-                <a href="https://app.coinica.net/game/treasurehunt" target="_blank" rel="noreferrer">
+                <a
+                  href="https://app.coinica.net/game/treasurehunt"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img src={logoTH} alt="treasure hunt" loading="lazy" />
                 </a>
               </div>
