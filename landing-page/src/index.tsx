@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Coinica from './Coinica';
 
 ReactDOM.render(
-  <App />,
+  <Coinica />,
   document.getElementById('root')
 );
 

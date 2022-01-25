@@ -1,0 +1,35 @@
+.container{
+    min-height: 93vh;
+    height: 100%;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    background: linear-gradient(180deg, #161e2f 45%, #2c406a 100%);
+}
+
+.nav{
+    height: 100%;
+    width: 15%;
+    ul{
+        list-style-type: none;
+
+        li{
+            padding: 5px;
+            a{
+                font-weight: 500;
+                font-size: 500;
+                text-decoration: none;
+                color:#57688d;
+            }
+            a:hover{
+                color: rgba(255, 255, 255, 1);
+            }
+        }
+    }
+}
+
+.content{
+    height: 100%;
+    width: 85%;
+}

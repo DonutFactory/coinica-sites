@@ -1,0 +1,75 @@
+.container{
+    color: #79b9f4;
+
+    h1{
+        font-size: 3rem;
+    }
+
+    h2{
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    h3{
+        padding: 50px 20px 0 0;
+    }
+
+    p{
+        font-size: larger;
+        color: #ecf0f1;
+        text-indent: 20px;
+        padding: 20px 0;
+    }
+
+    .content{
+        padding: 0 50px;
+    }
+
+    .image{
+        text-align: center;
+        img{
+            width: 700px;
+        }
+    }
+
+    //images
+    // .treasurehunt{
+    //     width: 700px;
+    // }
+    // .ghostquest{
+    //     width: 700px;
+    // }
+    .zodiacracing{
+        width: 400px !important;
+    }
+    .minoritydecision{
+        width: 300px !important;
+    }
+    .fishhunt{
+        width: 400px !important;
+    }
+
+    table{
+        border-collapse: collapse;
+        color: white;
+
+        margin: auto;
+
+        th, td{
+            text-align: right;
+            padding: 10px;
+            min-width: 200px;
+        }
+
+        th{
+            background-color: #0e141f;
+        }
+        td{
+            background-color: #242d41;
+        }
+    }
+
+    .text_left{
+        text-align: left;
+    }
+}
