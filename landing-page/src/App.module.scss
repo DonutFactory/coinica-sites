@@ -100,6 +100,10 @@
     margin-bottom: 65px;
   }
 
+  a {
+    text-align: center;
+  }
+
   button {
     cursor: pointer;
     background-color: #1785eb;
@@ -134,26 +138,43 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0px 20px;
+
+  @include breakpoint(sm) {
+    padding: 0;
+  }
 
   h4 {
     text-transform: uppercase;
     color: #f479b1;
-    font-size: rem(30);
+    font-size: rem(25);
     text-align: center;
     margin-bottom: 30px;
+
+    @include breakpoint(sm) {
+      font-size: rem(30);
+    }
   }
 
   ul {
     list-style-type: none;
     display: flex;
     justify-content: space-between;
-    font-size: rem(18);
+    font-size: rem(16);
+
+    @include breakpoint(sm) {
+      font-size: rem(18);
+    }
 
     li {
       p {
         color: $header-light;
-        font-size: rem(16);
+        font-size: rem(14);
         font-weight: 700;
+
+        @include breakpoint(sm) {
+          font-size: rem(16);
+        }
       }
       strong {
         color: $text-primary-color;
@@ -183,10 +204,35 @@
       color: $text-primary-color;
       transition: color 0.2s;
       text-decoration: none;
+      font-size: rem(12);
+
+      @include breakpoint(sm) {
+        font-size: rem(16);
+      }
+
       &:hover {
         color: #fff;
       }
     }
+  }
+}
+
+.roadMap {
+  background: linear-gradient(180deg, #232c40, #171d2c);
+  width: 100%;
+  min-height: 500px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  h4 {
+    font-size: rem(32);
+    font-weight: 900;
+    color: $text-primary-color;
+    text-align: center;
+    margin-bottom: 25px;
   }
 }
 
@@ -240,28 +286,6 @@
   }
 }
 
-.footerMeta {
-  background-color: $primary-darker;
-  text-align: center;
-  font-size: rem(14);
-  font-weight: 500;
-  padding-top: 15px;
-  padding-bottom: 15px;
-
-  a,
-  div {
-    color: $footer-text-color;
-    line-height: 20px;
-  }
-
-  a {
-    text-decoration: none;
-    &:hover {
-      color: #fff;
-    }
-  }
-}
-
 .pulsate {
   animation: pulsate 3s ease-out;
   animation-iteration-count: infinite;
@@ -284,10 +308,13 @@
   max-width: 1800px;
 }
 
-
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loader {

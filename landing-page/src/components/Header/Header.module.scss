@@ -1,3 +1,4 @@
+@import "../../assets/scss/utils";
 @import "../../assets/scss/colors";
 @import "../../assets/scss/mixin";
 
@@ -139,6 +140,10 @@ $zIndexHeader: 500;
           border-color: $header-dark;
           background: rgba($header-primary, 1);
           color: $header-dark;
+
+          a{
+            color: $header-dark;
+          }
         }
         &:active {
           border-color: $header-primary;
@@ -146,6 +151,11 @@ $zIndexHeader: 500;
             rgba($header-primary, 0.2),
             rgba($header-primary, 0.3)
           );
+          color: $header-primary;
+        }
+
+        a{
+          text-decoration: none;
           color: $header-primary;
         }
       }

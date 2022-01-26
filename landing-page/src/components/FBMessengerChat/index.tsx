@@ -19,7 +19,6 @@ const removeElementByIds = (ids: any[]) => {
 
 type Props = {
   pageId: string;
-  xfbml: boolean;
   version?: string;
   language?: string;
   debug?: boolean;
@@ -39,7 +38,6 @@ type Props = {
 const FBMessengerChat = ({
   pageId,
   shouldShowDialog = false,
-  xfbml = true,
   version = "12.0",
   language = "en_US",
   debug = false,
@@ -55,11 +53,13 @@ const FBMessengerChat = ({
   onCustomerChatDialogHide,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [_shouldShowDialog, setShouldShowDialog] = useState(undefined);
+  const [init, setInit] = useState(false);
 
   useEffect(() => {
-    setFbAsyncInit();
-    reloadSDKAsynchronously();
+    setTimeout(() => {
+      setFbAsyncInit();
+      reloadSDKAsynchronously();
+    }, 2000);
 
     return () => {
       if (window.FB !== undefined) {
@@ -70,7 +70,6 @@ const FBMessengerChat = ({
   }, [
     pageId,
     shouldShowDialog,
-    xfbml,
     version,
     language,
     debug,
@@ -86,14 +85,20 @@ const FBMessengerChat = ({
     onCustomerChatDialogHide,
   ]);
 
+  useEffect(() => {
+    if (window.FB !== undefined && init) {
+      window.FB.XFBML.parse();
+    }
+  }, [init]);
+
   const setFbAsyncInit = () => {
     window.fbAsyncInit = () => {
       window.FB.init({
         autoLogAppEvents,
-        xfbml,
+        xfbml: false,
         version: `v${version}`,
       });
-
+      setInit(true);
       setIsLoading(true);
     };
   };
@@ -188,7 +193,7 @@ const FBMessengerChat = ({
   };
 
   const renderMessengerChat = () => {
-    if (isLoading && _shouldShowDialog !== shouldShowDialog) {
+    if (isLoading && shouldShowDialog) {
       document.addEventListener(
         "DOMNodeInserted",
         (event) => {

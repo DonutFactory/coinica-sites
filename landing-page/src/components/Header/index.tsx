@@ -13,6 +13,7 @@ import {
 import { AppCtx } from "../../App";
 import styles from "./Header.module.scss";
 import coinica from "../../assets/image/coinica.png";
+import { Link } from "react-router-dom"
 
 // import { ChainId, Token, WETH, Fetcher, Route } from "@uniswap/sdk";
 // import { ethers } from "ethers";
@@ -341,9 +342,9 @@ const Header = ({ scrollTo }: Props) => {
           >
             <ul>
               <li>
-                <a href="#/" onClick={(e) => scrollTo(e)}>
+                {/* <a href="#/" onClick={(e) => scrollTo(e)}>
                   Presale
-                </a>
+                </a> */}
               </li>
               {/* <li>
                 <a href="https://staking.coinica.net/">Overview</a>
@@ -358,13 +359,18 @@ const Header = ({ scrollTo }: Props) => {
                 <a href="https://staking.coinica.net/vesting">Vesting</a>
               </li> */}
             </ul>
-            <button onClick={loginHandler}>
+            {/* <button onClick={loginHandler}>
               {loading
                 ? "Connecting..."
                 : currConnectedAdd
                 ? `0x..${currConnectedAdd.slice(-7)}`
                 : "Connect Wallet"}
-            </button>
+            </button> */}
+              <button>
+                <a className="button-link" href="https://app.coinica.net/" target="_blank">
+                Play Now
+                </a>
+              </button>
           </nav>
           <div className={styles.header__content__toggle}>
             {!menuOpen ? (
