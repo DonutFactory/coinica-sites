@@ -10,7 +10,7 @@ import {
   onAccountChange,
   onChainChange,
 } from "../../services/metamask";
-import { AppCtx } from "../../App";
+import { AppCtx } from "screens/Home";
 import styles from "./Header.module.scss";
 import coinica from "../../assets/image/coinica.png";
 import { Link } from "react-router-dom"
